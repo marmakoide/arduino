@@ -1,3 +1,6 @@
+USB_PORT=/dev/ttyUSB0
+
+
 .PHONY: clean upload
 
 all: main.hex
@@ -15,4 +18,4 @@ clean:
 	rm -f *.o *.elf *.hex
 
 upload: main.hex
-	avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyUSB0 -b 115200 -U flash:w:main.hex
+	avrdude -F -V -c arduino -p ATMEGA328P -P ${USB_PORT} -b 115200 -U flash:w:$<

@@ -27,8 +27,8 @@ I gathered information there
 
 ## Projects
 
-* `led-blinker <./projects/led-blinker/README.md>`__ : blinks the Arduino UNO on-board led
-* `serial-sync-echo <./projects/led-blinker/README.md>`__ : echo on the serial output what is given in the serial input, synchronous style
+* [led-blinker](projects/led-blinker/README.md) : blinks the Arduino UNO on-board led
+* [serial-sync-echo](projects/serial-sync-echo/README.md) : echo on the serial output what is given in the serial input, synchronous style
 
 ## Authors
 

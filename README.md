@@ -21,14 +21,14 @@ packages:
 
 I gathered information there
 
-* [Arduino in C](https://balau82.wordpress.com/arduino-in-c) A small series of tutorials on using plain C and AVR utilities
 * [Atmel ATmega328P Reference Manual](https://github.com/eerimoq/hardware-reference/blob/master/Atmel/atmega328p%20reference%20manual.pdf)
-
+* [Arduino in C](https://balau82.wordpress.com/arduino-in-c) A small series of tutorials on using plain C and AVR utilities
+* [Easy UART on with avrlib](https://appelsiini.net/2011/simple-usart-with-avr-libc/) Synchronous UART handling libavr's stdio implementation
 
 ## Projects
 
 * led-blinker : blinks the Arduino UNO on-board led
-
+* serial-sync-echo : echo on the serial output what is given in the serial input, synchronous style
 
 ## Authors
 

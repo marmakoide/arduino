@@ -9,3 +9,10 @@ to set a pin on and off.
 
  You might have to modify the USB device associated to the Arduino UNO when 
  plugged on the USB port. Check the Makefile to do so.
+
+
+## Notes
+
+The delay to switch the led on and off is implemented with a busy loop : the
+`_delay_ms()` function from libavr. This is fine for a quick demo, but the 
+usually better way to implement a delay would be using timers and interrupts.

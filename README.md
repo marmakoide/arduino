@@ -29,6 +29,7 @@ I gathered information there
 
 * [led-blinker](projects/led-blinker) : blinks the Arduino UNO on-board led
 * [serial-sync-echo](projects/serial-sync-echo) : echo on the serial output what is given in the serial input, synchronous style
+* [clock](projects/clock) : setup a timer to send a message on the serial output every second.
 
 ## Authors
 

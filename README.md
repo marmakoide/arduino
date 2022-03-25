@@ -8,9 +8,19 @@ Makefile, and a shell.
 Unless specified otherwise, those projects are targeting the Arduino UNO board. 
 
 
+## Projects
+
+The projects are more or less in topological order : later projects are 
+building upon earlier projects.
+
+1. [led-blinker](projects/led-blinker) : blinks the Arduino UNO's on-board led
+1. [serial-sync-echo](projects/serial-sync-echo) : echo on the serial output what is given in the serial input, synchronous style
+1. [clock](projects/clock) : setup a timer to send a message on the serial output every second.
+
+
 ## Software environment
 
-I did those project on a vanilla Archlinux install. I installed the following 
+I did those projects on a vanilla Archlinux install. I installed the following 
 packages:
 
 * [arduino-avr-core](https://archlinux.org/packages/community/any/arduino-avr-core/) C language toolchain for AVR MCUs and related utilities
@@ -19,18 +29,16 @@ packages:
 
 ## Information sources
 
-I gathered information there
+I gathered the information I needed to realize the projects from those sources
 
 * [Atmel ATmega328P Reference Manual](https://github.com/eerimoq/hardware-reference/blob/master/Atmel/atmega328p%20reference%20manual.pdf)
 * [Arduino in C](https://balau82.wordpress.com/arduino-in-c) A small series of tutorials on using plain C and AVR utilities
 * [Easy UART on with avrlib](https://appelsiini.net/2011/simple-usart-with-avr-libc/) Synchronous UART handling libavr's stdio implementation
 * [Bare Metal Micro](https://baremetalmicro.com/) Nicely explained examples on the fundamentals ie. ports, interrupts
 
-## Projects
+I am very thankful to all those people who took the time and the effort to
+write those tutorials and manuals.
 
-* [led-blinker](projects/led-blinker) : blinks the Arduino UNO on-board led
-* [serial-sync-echo](projects/serial-sync-echo) : echo on the serial output what is given in the serial input, synchronous style
-* [clock](projects/clock) : setup a timer to send a message on the serial output every second.
 
 ## Authors
 

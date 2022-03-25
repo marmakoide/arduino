@@ -24,6 +24,7 @@ I gathered information there
 * [Atmel ATmega328P Reference Manual](https://github.com/eerimoq/hardware-reference/blob/master/Atmel/atmega328p%20reference%20manual.pdf)
 * [Arduino in C](https://balau82.wordpress.com/arduino-in-c) A small series of tutorials on using plain C and AVR utilities
 * [Easy UART on with avrlib](https://appelsiini.net/2011/simple-usart-with-avr-libc/) Synchronous UART handling libavr's stdio implementation
+* [Bare Metal Micro](https://baremetalmicro.com/) Nicely explained examples on the fundamentals ie. ports, interrupts
 
 ## Projects
 

@@ -61,7 +61,7 @@ static void
 timer_stop(void) {
     TCCR1B = ~(_BV(CS10) | _BV(CS11) | _BV(CS12)); // Stop timer
     TIMSK1 = ~_BV(TOIE1);                          // Disable interrupt
-    TIFR1 |= _BV(TOV1); 					       // Clear interrupt flag
+    TIFR1 |= _BV(TOV1);                            // Clear interrupt flag
 }
 
  
@@ -99,11 +99,11 @@ ISR(TIMER1_OVF_vect) {
 	clock_state += 1;
 
 	// Display the clock message
-    fputs(clock_message[clock_state & 1], &uart_output);
-    fputc('\n', &uart_output);
+	fputs(clock_message[clock_state & 1], &uart_output);
+	fputc('\n', &uart_output);
 
-  	// Start the timer
-    timer_start(1000000UL);
+	// Start the timer
+	timer_start(1000000UL);
 }
 
 
@@ -118,6 +118,6 @@ main(void) {
 	// Main loop : enable interrupts and sleeps whenever there is nothing to do
 	sei(); 
 	timer_start(1000000UL);
-    while(1)
-        sleep_mode();
+	while(1)
+		sleep_mode();
 }

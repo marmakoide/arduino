@@ -14,7 +14,8 @@ waiting cycles can't be used to do something else.
   * You can leave the serial monitor session by pressing crtl-A, then crtl-X.
   
 You might have to modify the USB device associated to the Arduino UNO when 
-plugged on the USB port. Check the Makefile and the serial-com script to do so.
+plugged on the USB port. Check the Makefile and the [serial-com](serial-com)
+script to do so.
 
 
 ## Notes

@@ -31,7 +31,7 @@ On a vanilla Archlinux, install the following packages:
 
 ### Ubuntu
 
-On Ubuntu, install the following packae
+On Ubuntu, install the following packages:
 
 * gcc-avr
 * avr-libc

@@ -6,7 +6,7 @@
  
 int
 main(void) {
-	// Set pin 5 of PORTB for output
+	// Set pin 5 of PORT B for write operations
 	DDRB |= _BV(DDB5);
  
 	while(1) {

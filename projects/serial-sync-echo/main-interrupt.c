@@ -33,7 +33,7 @@ ISR(USART_UDRE_vect) {
 }
 
 
-// Receptin interrupt handler
+// Reception interrupt handler
 ISR(USART_RX_vect) {
 	uint8_t uart_rx_next_end = (uart_rx_end + 1) % UART_TX_BUFFER_SIZE;
 	if (uart_rx_next_end != uart_rx_start) {

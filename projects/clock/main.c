@@ -9,15 +9,36 @@
 
 // --- Clock state and data ---------------------------------------------------
 
-volatile unsigned int clock_state = 0;
+static unsigned int clock_state = 0;
 
 static char* clock_message[2] = { "TIC", "TOC" };
 
 
-// --- UART initialisation ----------------------------------------------------
+// --- UART handling ----------------------------------------------------------
+
+// Transmission ring buffer
+#define UART_TX_BUFFER_SIZE 16
+static uint8_t uart_tx_start;
+static uint8_t uart_tx_end;
+static char uart_tx_buffer[UART_TX_BUFFER_SIZE];
+
+
+// Transmission interrupt handler
+ISR(USART_UDRE_vect) {
+	if (uart_tx_start != uart_tx_end) {
+		UDR0 = uart_tx_buffer[uart_tx_start];
+		uart_tx_start = (uart_tx_start + 1) % UART_TX_BUFFER_SIZE;
+	}
+}
+
 
 void
 uart_init(void) {
+	// Initialize transmission buffer
+	uart_tx_start = 0;
+	uart_tx_end = 0;
+
+	// Setup transmission rate
 	UBRR0H = UBRRH_VALUE;
 	UBRR0L = UBRRL_VALUE;
 
@@ -27,20 +48,27 @@ uart_init(void) {
     	UCSR0A &= ~(_BV(U2X0));
 	#endif
 
-	UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); // 8-bit data
-	UCSR0B = _BV(RXEN0) | _BV(TXEN0);   // Enable RX and TX
+	UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); // Setup data format, async transmission
+	UCSR0B = _BV(RXEN0) | _BV(TXEN0);   // Enable reception and transmission
+
+	UCSR0B |= _BV(UDRIE0); // Enable transmission ready interrupt
 }
 
 
-// --- Setup to use stdio function for serial communications ------------------
-
 int
 uart_putchar(char c, FILE *stream) {
-    if (c == '\n')
-        uart_putchar('\r', stream);
- 
-    loop_until_bit_is_set(UCSR0A, UDRE0);
-    UDR0 = c;
+	// Sleeps until there is room available in the transmission buffer
+	uint8_t uart_tx_next_end = (uart_tx_end + 1) % UART_TX_BUFFER_SIZE;
+	while(uart_tx_next_end == uart_tx_start)
+			sleep_mode();
+
+	// Add the character in the transmission buffer
+	cli();
+	uart_tx_buffer[uart_tx_end] = c;
+	uart_tx_end = uart_tx_next_end;
+	sei();
+
+	// Job done	
     return 0;
 }
 
@@ -100,7 +128,7 @@ ISR(TIMER1_OVF_vect) {
 
 	// Display the clock message
 	fputs(clock_message[clock_state & 1], &uart_output);
-	fputc('\n', &uart_output);
+	fputs("\r\n", &uart_output);
 
 	// Start the timer
 	timer_start(1000000UL);

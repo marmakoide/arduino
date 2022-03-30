@@ -87,8 +87,9 @@ uart_putchar(char c, FILE *stream) {
 	sei();
 
 	// Job done	
-    return 0;
+	return 0;
 }
+
 
 int
 uart_getchar(FILE *stream) {
@@ -119,7 +120,6 @@ FILE uart_io =
 	FDEV_SETUP_STREAM(uart_putchar, uart_getchar, _FDEV_SETUP_RW);
 
 
-
 // --- Main entry point -------------------------------------------------------
 
 #define INPUT_BUFFER_SIZE 18
@@ -129,20 +129,20 @@ main(void) {
 	char input_buffer[INPUT_BUFFER_SIZE];
 
 	// UART setup
-    uart_init();
+	uart_init();
 	sei();
 	
 	// Main loop
 	fputs("---[ Arduino echo ]---\r\n", &uart_output);
-    while(1) {
-    	// Fill the input buffer
-        fgets(input_buffer, INPUT_BUFFER_SIZE - 1, &uart_input);
+	while(1) {
+		// Fill the input buffer
+		fgets(input_buffer, INPUT_BUFFER_SIZE - 1, &uart_input);
 		
-        // Write the content of the input buffer        
-        size_t len = strlen(input_buffer);
-        if (input_buffer[len - 1] == '\n')
-       		input_buffer[len - 1] = '\0';
+		// Write the content of the input buffer        
+		size_t len = strlen(input_buffer);
+		if (input_buffer[len - 1] == '\n')
+			input_buffer[len - 1] = '\0';
 
-        fprintf(&uart_output, "=> '%s'\r\n", input_buffer);        
-    }
+		fprintf(&uart_output, "=> '%s'\r\n", input_buffer);        
+	}
 }

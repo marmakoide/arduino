@@ -29,9 +29,6 @@ uart_init(void) {
 
 int
 uart_putchar(char c, FILE *stream) {
-    if (c == '\n')
-        uart_putchar('\r', stream);
- 
     loop_until_bit_is_set(UCSR0A, UDRE0);
     UDR0 = c;
     return 0;
@@ -66,7 +63,8 @@ main(void) {
 	// UART setup
     uart_init();
 
-    fputs("---[ Arduino echo ]---\n", &uart_output);
+	// Main loop
+    fputs("---[ Arduino echo ]---\r\n", &uart_output);
     while(1) {
     	// Fill the input buffer
         fgets(input_buffer, INPUT_BUFFER_SIZE - 1, &uart_input);
@@ -76,6 +74,6 @@ main(void) {
         if (input_buffer[len - 1] == '\n')
        		input_buffer[len - 1] = '\0';
         	
-        fprintf(&uart_output, "=> '%s'\n", input_buffer);        
+        fprintf(&uart_output, "=> '%s'\r\n", input_buffer);        
     }
 }

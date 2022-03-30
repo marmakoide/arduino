@@ -1,21 +1,24 @@
 USB_PORT=/dev/ttyUSB0
 
 
-.PHONY: clean upload
+.PHONY: clean upload-polling upload-interrupt
 
-all: main.hex
+all: main-polling.hex main-interrupt.hex
 
-main.o: main.c
+%.o: %.c
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=atmega328p -c -o $@ $<
 
-main.elf: main.o
+%.elf: %.o
 	avr-gcc -mmcu=atmega328p $< -o $@
 
-main.hex: main.elf
+%.hex: %.elf
 	avr-objcopy -O ihex -R .eeprom $< $@
 
 clean:
 	rm -f *.o *.elf *.hex
 
-upload: main.hex
+upload-polling: main-polling.hex
+	avrdude -F -V -c arduino -p ATMEGA328P -P ${USB_PORT} -b 115200 -U flash:w:$<
+
+upload-interrupt: main-interrupt.hex
 	avrdude -F -V -c arduino -p ATMEGA328P -P ${USB_PORT} -b 115200 -U flash:w:$<

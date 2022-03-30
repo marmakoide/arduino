@@ -5,13 +5,13 @@ SERIAL_PORT=/dev/ttyUSB0
 
 all: main.hex
 
-main.o: main.c
+%.o: %.c
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=atmega328p -c -o $@ $<
 
-main.elf: main.o
+%.elf: %.o
 	avr-gcc -mmcu=atmega328p $< -o $@
 
-main.hex: main.elf
+%.hex: %.elf
 	avr-objcopy -O ihex -R .eeprom $< $@
 
 clean:

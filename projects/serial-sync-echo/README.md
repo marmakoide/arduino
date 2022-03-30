@@ -84,7 +84,3 @@ reception and transmission of data by the hardware *UART*
 `FDEV_SETUP_STREAM` macro. After providing a `putchar` and `getchar` function,
 we get a stream, and we can call `fprintf` for example. It's what we do here
 to send and receive on the *UART*.
-
-`uart_putchar` appends a carriage return (`\r`) whenever a line return is 
-entered, to signal to the serial terminal that receives our communication that
-we finished the message we typed in.

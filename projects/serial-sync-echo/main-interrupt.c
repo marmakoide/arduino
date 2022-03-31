@@ -35,7 +35,7 @@ ISR(USART_UDRE_vect) {
 
 // Reception interrupt handler
 ISR(USART_RX_vect) {
-	uint8_t uart_rx_next_end = (uart_rx_end + 1) % UART_TX_BUFFER_SIZE;
+	uint8_t uart_rx_next_end = (uart_rx_end + 1) % UART_RX_BUFFER_SIZE;
 	if (uart_rx_next_end != uart_rx_start) {
 		uart_rx_buffer[uart_rx_end] = UDR0;
 		uart_rx_end = uart_rx_next_end;
@@ -102,7 +102,7 @@ uart_getchar(FILE *stream) {
 	// Pick the first character in the reception buffer
 	cli();
 	ret = uart_rx_buffer[uart_rx_start];
-	uart_rx_start = (uart_rx_start + 1) % UART_TX_BUFFER_SIZE;
+	uart_rx_start = (uart_rx_start + 1) % UART_RX_BUFFER_SIZE;
 	sei();
 
 	// Job done

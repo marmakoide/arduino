@@ -18,9 +18,9 @@ static char* clock_message[2] = { "TIC", "TOC" };
 
 // Transmission ring buffer
 #define UART_TX_BUFFER_SIZE 16
-static uint8_t uart_tx_start;
-static uint8_t uart_tx_end;
-static char uart_tx_buffer[UART_TX_BUFFER_SIZE];
+static volatile uint8_t uart_tx_start;
+static volatile uint8_t uart_tx_end;
+static volatile char uart_tx_buffer[UART_TX_BUFFER_SIZE];
 
 
 // Transmission interrupt handler

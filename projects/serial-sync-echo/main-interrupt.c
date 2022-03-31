@@ -13,15 +13,15 @@
 
 // Transmission ring buffer
 #define UART_TX_BUFFER_SIZE 16
-static uint8_t uart_tx_start;
-static uint8_t uart_tx_end;
-static char uart_tx_buffer[UART_TX_BUFFER_SIZE];
+static volatile uint8_t uart_tx_start;
+static volatile uint8_t uart_tx_end;
+static volatile char uart_tx_buffer[UART_TX_BUFFER_SIZE];
 
 // Reception ring buffer
 #define UART_RX_BUFFER_SIZE 16
-static uint8_t uart_rx_start;
-static uint8_t uart_rx_end;
-static char uart_rx_buffer[UART_RX_BUFFER_SIZE];
+static volatile uint8_t uart_rx_start;
+static volatile uint8_t uart_rx_end;
+static volatile char uart_rx_buffer[UART_RX_BUFFER_SIZE];
 
 
 // Transmission interrupt handler
@@ -92,16 +92,14 @@ uart_putchar(char c, FILE *stream) {
 
 
 int
-uart_getchar(FILE *stream) {
-	char ret;
-	
+uart_getchar(FILE *stream) {	
 	// Sleeps until there are data available in the reception buffer
 	while(uart_rx_start == uart_rx_end)
 		sleep_mode();
 
 	// Pick the first character in the reception buffer
 	cli();
-	ret = uart_rx_buffer[uart_rx_start];
+	char ret = uart_rx_buffer[uart_rx_start];
 	uart_rx_start = (uart_rx_start + 1) % UART_RX_BUFFER_SIZE;
 	sei();
 

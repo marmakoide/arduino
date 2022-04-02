@@ -1,23 +1,24 @@
-# Arduino tutorial projects
+# Alex's Arduino & AVR stuffs
 
-This repository is a set of small educational Arduino projects I did for my 
+This repository contain all my tinkerings with Arduino boards I did for my 
 personal entertainment and enlightenment. The Arduino language and associated 
 IDE are not used, as they do not suit my taste. Here, it's Linux, plain C, 
 Makefile, and a shell.
 
-Unless specified otherwise, those projects are targeting the Arduino UNO board. 
+Unless specified otherwise, those tutorials/projects are targeting the Arduino
+UNO board. 
 
 
-## Projects
+## Tutorials
 
-The projects are more or less in topological order : later projects are 
-building upon earlier projects. Each project has some notes I took, as an attempt
-to leave the least amount of mystery.
+The tutorials are more or less in topological order : later tutorials are 
+building upon earlier tutorials. Each tutorial has some notes I took, as an 
+attempt to leave the least amount of mystery.
 
-1. [led-blinker](projects/led-blinker) : blinks the Arduino UNO's on-board led
-1. [pin-trigger](projects/pin-trigger) : switch on and off the Arduino UNO's on-board led with pin 12
-1. [serial-sync-echo](projects/serial-sync-echo) : echo on the serial output what is given in the serial input, synchronous style
-1. [clock](projects/clock) : setup a timer to send a message on the serial output every second.
+1. [led-blinker](tutorials/led-blinker) : blinks the Arduino UNO's on-board led
+1. [pin-trigger](tutorials/pin-trigger) : switch on and off the Arduino UNO's on-board led with pin 12
+1. [serial-sync-echo](tutorials/serial-sync-echo) : echo on the serial output what is given in the serial input, synchronous style
+1. [clock](tutorials/clock) : setup a timer to send a message on the serial output every second.
 
 
 ## Software environment
@@ -40,7 +41,7 @@ On Ubuntu, install the following packages:
 
 ## Information sources
 
-I gathered the information I needed to realize the projects from those sources
+I gathered the information I needed to realize the tutorials from those sources
 
 * [Atmel ATmega328P Reference Manual](https://github.com/eerimoq/hardware-reference/blob/master/Atmel/atmega328p%20reference%20manual.pdf)
 * [Arduino in C](https://balau82.wordpress.com/arduino-in-c) A small series of tutorials on using plain C and AVR utilities

@@ -49,7 +49,7 @@ uart_init(void) {
 	#endif
 
 	UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); // Setup data format, async transmission
-	UCSR0B = _BV(TXEN0);   // Enable reception and transmission
+	UCSR0B = _BV(TXEN0);   // Enable transmission only
 
 	UCSR0B |= _BV(UDRIE0); // Enable transmission ready interrupt
 }

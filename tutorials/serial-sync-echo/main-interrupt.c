@@ -141,6 +141,6 @@ main(void) {
 		if (input_buffer[len - 1] == '\n')
 			input_buffer[len - 1] = '\0';
 
-		fprintf(&uart_output, "=> '%s'\r\n", input_buffer);        
+		fprintf(&uart_output, "=> '%s'\r\n", input_buffer);       
 	}
 }

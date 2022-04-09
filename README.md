@@ -19,7 +19,7 @@ attempt to leave the least amount of mystery.
 1. [pin-trigger](tutorials/pin-trigger) : switch on and off the Arduino UNO's on-board led with pin 12
 1. [serial-sync-echo](tutorials/serial-sync-echo) : echo on the serial output what is given in the serial input, synchronous style
 1. [clock](tutorials/clock) : setup a timer to send a message on the serial output every second.
-
+1. [i2c](tutorials/i2c): interfacing with i2c devices 
 
 ## Software environment
 
@@ -48,6 +48,7 @@ I gathered the information I needed to realize the tutorials from those sources
 * [Easy UART on with avrlib](https://appelsiini.net/2011/simple-usart-with-avr-libc/) Synchronous UART handling libavr's stdio implementation
 * [Bare Metal Micro](https://baremetalmicro.com/) Nicely explained examples on the fundamentals ie. ports, interrupts
 * [The USART of the AVR](https://maxembedded.com/2013/09/the-usart-of-the-avr/) Detailed explanation about the USART/UART, good complement to the reference manual
+* [I2C on the AVR](http://www.avrbeginners.net/architecture/twi/twi.html)
 
 I am very thankful to all those people who took the time and the effort to
 write those tutorials and manuals.

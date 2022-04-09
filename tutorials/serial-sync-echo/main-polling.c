@@ -13,7 +13,7 @@ void
 uart_init(void) {
 	UBRR0H = UBRRH_VALUE;
 	UBRR0L = UBRRL_VALUE;
-
+    
 	#if USE_2X
     	UCSR0A |= _BV(U2X0);
 	#else
@@ -64,7 +64,7 @@ main(void) {
     uart_init();
 
 	// Main loop
-    fputs("---[ Arduino echo ]---\r\n", &uart_output);
+    fputs("---[ Arduino echo ]---\r\n", &uart_output);    
     while(1) {
     	// Fill the input buffer
         fgets(input_buffer, INPUT_BUFFER_SIZE - 1, &uart_input);

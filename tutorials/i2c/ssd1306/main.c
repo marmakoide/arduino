@@ -232,13 +232,11 @@ SSD1306_init_sequence[] = {
 int
 ssd1306_init() {
     // Send START
-    fputs("twi start\r\n", &uart_output);
     twi_start();
     if ((TW_STATUS != TW_START) && (TW_STATUS != TW_REP_START))
         return 0;        
     
     // Send slave address
-    fputs("twi send slave address\r\n", &uart_output);
     twi_send_slave_address(SSD1306_slave_address);
     if (TW_STATUS != TW_MT_SLA_ACK)
         return 0;
@@ -258,7 +256,6 @@ ssd1306_init() {
     }
     
     // Send stop
-    fputs("twi stop\r\n", &uart_output);
     twi_stop();
     
     // Job done;
@@ -531,6 +528,7 @@ main() {
 	// Setup
 	uart_init();
 	twi_init();
+	sei();
 	
 	uint8_t ret = ssd1306_init();
 	if (!ret) {

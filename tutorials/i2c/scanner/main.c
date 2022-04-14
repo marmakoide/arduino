@@ -124,7 +124,8 @@ main() {
 	// Setup
 	uart_init();
 	twi_init();
-	
+    sei();
+    	
 	// I2C bus scanning
 	id_found_count = 0;
 	memset(id_found_set, 0, 16);

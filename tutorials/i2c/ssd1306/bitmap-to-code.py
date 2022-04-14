@@ -30,7 +30,7 @@ def main():
 
     # Generate C code
     print('#include <stdint.h>')
-    print('static const __flash uint8_t') 
+    print('const __flash uint8_t') 
     print(f'{args.array_name}[{img.shape[0] * img.shape[1] // 8}] = {{')
     print(', '.join(f'0x{byte:02x}'for byte in itertools.chain(*scanline_list)))
     print('};')                

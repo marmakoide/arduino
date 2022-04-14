@@ -89,7 +89,6 @@ twi_init() {
     
     // TWI registers setup
     TWBR = (uint8_t)(((F_CPU / F_SCL) - 16) / 2);
-    //TWBR = 72; // 100k
 }
 
 
@@ -136,26 +135,21 @@ main() {
 	    twi_start();
 	    if ((TW_STATUS != TW_START) && (TW_STATUS != TW_REP_START)) {
 	        fprintf(&uart_output, "  => I2C 'start' message failed (status = 0x%02x)\r\n", TW_STATUS);
-	        break;
+	        goto waiting_loop;
 	    }
 	    
 	    // Send slave address on the I2C bus
-	    fprintf(&uart_output, "  [0x%02x]", i);
-	    
 	    twi_send_slave_address(i);
 	    if (TW_STATUS == TW_MT_SLA_ACK) {
-	        fputs(" => device found\r\n", &uart_output);
 	        id_found_set[i / 8] |= 1 << (i % 8);
 	        id_found_count += 1;
-	    }
-	    else
-	        fprintf(&uart_output, "  => no device found (status = 0x%02x)\r\n", TW_STATUS);	   
+	    }	   
 	}
 	fputs("\r\nScanning complete\r\n", &uart_output);
 	
 	// List the devices found
 	if (id_found_count == 0)
-	    fputs("No device founds\r\n", &uart_output);
+	    fputs("No devices found\r\n", &uart_output);
 	else {
 	    fprintf(&uart_output, "%u device(s) found:\r\n", id_found_count);
 	    for(uint8_t i = 1; i < 128; ++i) {
@@ -165,6 +159,7 @@ main() {
 	}
 	
 	// Wait, do nothing loop
+    waiting_loop:
 	while(1) {
 	    sleep_mode();
 	}

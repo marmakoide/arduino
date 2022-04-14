@@ -20,6 +20,7 @@ attempt to leave the least amount of mystery.
 1. [serial-sync-echo](tutorials/serial-sync-echo) : echo on the serial output what is given in the serial input, synchronous style
 1. [clock](tutorials/clock) : setup a timer to send a message on the serial output every second.
 1. [i2c](tutorials/i2c): interfacing with i2c devices 
+1. [SSD1306](https://github.com/Matiasus/SSD1306) : code for controlling SSD1306 OLED screens, easy to follow
 
 ## Software environment
 

@@ -1,0 +1,99 @@
+#ifndef AVRKIT_GPIO_H
+#define AVRKIT_GPIO_H
+
+#include <avr/io.h>
+
+#include <avrkit/types.h>
+
+
+
+/*
+ * Pin state handling
+ */
+
+#define GPIO__PIN_IS_HIGH(PORT_ID, PIN_ID) \
+inline static bool \
+gpio_pin_ ## PORT_ID ## PIN_ID ## __is_high() { \
+    return PIN ## PORT_ID & (1 << PIN ## PORT_ID ## PIN_ID ); \
+}
+
+#define GPIO__PIN_IS_LOW(PORT_ID, PIN_ID) \
+inline static bool \
+gpio_pin_ ## PORT_ID ## PIN_ID ## __is_low() { \
+    return PIN ## PORT_ID & (1 << PIN ## PORT_ID ## PIN_ID ) == 0; \
+}
+
+#define GPIO__SET_PIN_AS_OUTPUT(PORT_ID, PIN_ID) \
+inline static void \
+gpio_pin_ ## PORT_ID ## PIN_ID ## __set_as_output() { \
+    DDR ## PORT_ID |= 1 << ( DD ## PORT_ID ## PIN_ID ); \
+}
+
+#define GPIO__SET_PIN_AS_INPUT(PORT_ID, PIN_ID) \
+inline static void \
+gpio_pin_ ## PORT_ID ## PIN_ID ## __set_as_input() { \
+    DDR ## PORT_ID &= ~(1 << ( DD ## PORT_ID ## PIN_ID )); \
+}
+ 
+#define GPIO__SET_PIN_HIGH(PORT_ID, PIN_ID) \
+inline static void \
+gpio_pin_ ## PORT_ID ## PIN_ID ## __set_high() { \
+    PORT ## PORT_ID |= 1 << ( PORT ## PORT_ID ## PIN_ID ); \
+}
+
+#define GPIO__SET_PIN_LOW(PORT_ID, PIN_ID) \
+inline static void \
+gpio_pin_ ## PORT_ID ## PIN_ID ## __set_low() { \
+    PORT ## PORT_ID &= ~(1 << ( PORT ## PORT_ID ## PIN_ID )); \
+}
+
+#define GPIO__ENABLE_INTERRUPT(PORT_ID, PIN_ID, PIN_GROUP_ID, PIN_INTERRUPT_ID) \
+inline static void \
+gpio_pin_ ## PORT_ID ## PIN_ID ## __enable_interrupt() { \
+    PCICR |= 1 << PCIE ## PIN_GROUP_ID; \
+    PCMSK ## PIN_GROUP_ID |= 1 << PCINT ## PIN_INTERRUPT_ID; \
+}
+
+
+/*
+ * Instanciate all the GPIO definitions
+ */
+
+#define INSTANCIATE_GPIO_PIN_DEFINITIONS(PORT_ID, PIN_ID, PIN_GROUP_ID, PIN_INTERRUPT_ID) \
+    GPIO__PIN_IS_HIGH(PORT_ID, PIN_ID) \
+    GPIO__PIN_IS_LOW(PORT_ID, PIN_ID) \
+    GPIO__SET_PIN_AS_OUTPUT(PORT_ID, PIN_ID) \
+    GPIO__SET_PIN_AS_INPUT(PORT_ID, PIN_ID) \
+    GPIO__SET_PIN_HIGH(PORT_ID, PIN_ID) \
+    GPIO__SET_PIN_LOW(PORT_ID, PIN_ID) \
+    GPIO__ENABLE_INTERRUPT(PORT_ID, PIN_ID, PIN_GROUP_ID, PIN_INTERRUPT_ID) 
+    
+
+INSTANCIATE_GPIO_PIN_DEFINITIONS(B, 0, 0,  0)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(B, 1, 0,  1)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(B, 2, 0,  2)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(B, 3, 0,  3)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(B, 4, 0,  4)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(B, 5, 0,  5)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(B, 6, 0,  6)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(B, 7, 0,  7)
+
+INSTANCIATE_GPIO_PIN_DEFINITIONS(C, 0, 1,  8)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(C, 1, 1,  9)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(C, 2, 1, 10)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(C, 3, 1, 11)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(C, 4, 1, 12)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(C, 5, 1, 13)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(C, 6, 1, 14)
+
+INSTANCIATE_GPIO_PIN_DEFINITIONS(D, 0, 2, 16)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(D, 1, 2, 17)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(D, 2, 2, 18)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(D, 3, 2, 19)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(D, 4, 2, 20)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(D, 5, 2, 21)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(D, 6, 2, 22)
+INSTANCIATE_GPIO_PIN_DEFINITIONS(D, 7, 2, 23)
+
+
+#endif /* AVRKIT_GPIO_H */

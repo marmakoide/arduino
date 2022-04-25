@@ -229,7 +229,7 @@ SSD1306_init_sequence[] = {
 }; // 
 
 
-int
+uint8_t
 ssd1306_init() {
     // Send START
     twi_start();
@@ -263,7 +263,7 @@ ssd1306_init() {
 }
 
 
-int
+uint8_t
 ssd1306_clear() {
    // Send START
     twi_start();
@@ -294,7 +294,7 @@ ssd1306_clear() {
 }
 
 
-int
+uint8_t
 ssd1306_upload_bitmap(const __flash uint8_t* bitmap) {
     // Send START
     twi_start();
@@ -326,7 +326,7 @@ ssd1306_upload_bitmap(const __flash uint8_t* bitmap) {
 }
 
 
-int
+uint8_t
 ssd1306_set_display_on() {
     // Send START
     twi_start();
@@ -350,7 +350,7 @@ ssd1306_set_display_on() {
 }
 
 
-int
+uint8_t
 ssd1306_set_display_off() {
     // Send START
     twi_start();
@@ -374,7 +374,7 @@ ssd1306_set_display_off() {
 }
 
 
-int
+uint8_t
 ssd1306_set_normal_display_mode() {
     // Send START
     twi_start();
@@ -398,7 +398,7 @@ ssd1306_set_normal_display_mode() {
 }
 
 
-int
+uint8_t
 ssd1306_set_inverse_display_mode() {
     // Send START
     twi_start();
@@ -422,7 +422,7 @@ ssd1306_set_inverse_display_mode() {
 }
 
 
-int
+uint8_t
 ssd1306_activate_scroll() {
    // Send START
     twi_start();
@@ -446,7 +446,7 @@ ssd1306_activate_scroll() {
 }
 
 
-int
+uint8_t
 ssd1306_deactivate_scroll() {
    // Send START
     twi_start();
@@ -470,7 +470,7 @@ ssd1306_deactivate_scroll() {
 }
 
 
-int
+uint8_t
 ssd1306_setup_horizontal_scroll(uint8_t start, uint8_t stop, int left_to_right) {
     twi_start();
     twi_send_slave_address(SSD1306_slave_address);
@@ -496,7 +496,7 @@ ssd1306_setup_horizontal_scroll(uint8_t start, uint8_t stop, int left_to_right) 
 }
 
 
-int
+uint8_t
 ssd1306_set_vertical_offset(int8_t offset) {
    // Send START
     twi_start();

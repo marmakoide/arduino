@@ -1,3 +1,4 @@
+MCU=atmega328p
 USB_PORT=/dev/ttyUSB0
 
 
@@ -6,10 +7,10 @@ USB_PORT=/dev/ttyUSB0
 all: main-polling.hex main-interrupt.hex
 
 %.o: %.c
-	avr-gcc -Os -DF_CPU=16000000UL -mmcu=atmega328p -c -o $@ $<
+	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c -o $@ $<
 
 %.elf: %.o
-	avr-gcc -mmcu=atmega328p $< -o $@
+	avr-gcc -mmcu=$(MCU) $< -o $@
 
 %.hex: %.elf
 	avr-objcopy -O ihex -R .eeprom $< $@

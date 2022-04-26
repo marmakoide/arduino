@@ -277,7 +277,7 @@ INSTANCIATE_USART_DEFINITIONS(0)
 
 #define DEFAULT_USART_RING_BUFFER_SIZE 16
 
-
+/*
 // Generic ring buffer defintion
 #define USART_RING_BUFFER_TYPE(STRUCT_NAME, DATA_TYPE, BUFFER_SIZE) \
 struct STRUCT_NAME { \
@@ -319,14 +319,11 @@ STRUCT_NAME ## __pop(volatile struct STRUCT_NAME * self) { \
     self->start = (self->start + 1) % BUFFER_SIZE; \
 	return out; \
 }
-
+*/
 
 // Transmission ring buffer management
 #define USART_TX_BUFFER(USART_ID, STRUCT_NAME, BUFFER_SIZE) \
-USART_RING_BUFFER_TYPE(STRUCT_NAME, char, BUFFER_SIZE) \
-\
-static volatile struct STRUCT_NAME \
-STRUCT_NAME ## __singleton = { 0x00, 0x00 };\
+STATIC_RING_BUFFER_TYPE(STRUCT_NAME, char, BUFFER_SIZE) \
 \
 inline static void \
 usart ## USART_ID ## __on_data_register_empty() { \
@@ -373,10 +370,7 @@ usart ## USART_ID ## __send_str(const char* str) { \
 
 // Reception ring buffer management
 #define USART_RX_BUFFER(USART_ID, STRUCT_NAME, BUFFER_SIZE) \
-USART_RING_BUFFER_TYPE(STRUCT_NAME, char, BUFFER_SIZE) \
-\
-static volatile struct STRUCT_NAME \
-STRUCT_NAME ## __singleton = { 0x00, 0x00 };\
+STATIC_RING_BUFFER_TYPE(STRUCT_NAME, char, BUFFER_SIZE) \
 \
 inline static void  \
 usart ## USART_ID ##  __on_rx_complete() { \

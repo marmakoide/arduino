@@ -283,8 +283,8 @@ STATIC_RING_BUFFER_TYPE(STRUCT_NAME, char, BUFFER_SIZE) \
 \
 inline static void \
 usart ## USART_ID ## __on_data_register_empty() { \
-  if (!STRUCT_NAME ## __empty(& STRUCT_NAME ## __singleton)) \
-    UDR ## USART_ID = STRUCT_NAME ## __pop(& STRUCT_NAME ## __singleton); \
+  if (!STRUCT_NAME ## __empty()) \
+    UDR ## USART_ID = STRUCT_NAME ## __pop(); \
 } \
 \
 static void \
@@ -292,9 +292,9 @@ usart ## USART_ID ## __send_char(char c) { \
     bool completed = 0; \
     do { \
         cli(); \
-        bool full = STRUCT_NAME ## __full(& STRUCT_NAME ## __singleton); \
+        bool full = STRUCT_NAME ## __full(); \
         if (!full) { \
-            STRUCT_NAME ## __push(& STRUCT_NAME ## __singleton, c); \
+            STRUCT_NAME ## __push(c); \
             completed = 1; \
         } \
         sei(); \
@@ -330,8 +330,8 @@ STATIC_RING_BUFFER_TYPE(STRUCT_NAME, char, BUFFER_SIZE) \
 \
 inline static void  \
 usart ## USART_ID ##  __on_rx_complete() { \
-    if (! STRUCT_NAME ## __full(& STRUCT_NAME ## __singleton)) \
-        STRUCT_NAME ## __push(& STRUCT_NAME ## __singleton, UDR ## USART_ID ); \
+    if (! STRUCT_NAME ## __full()) \
+        STRUCT_NAME ## __push(UDR ## USART_ID ); \
 } \
 \
 static char \
@@ -340,9 +340,9 @@ usart ## USART_ID ## __get_char() { \
     bool completed = 0; \
     do { \
         cli(); \
-        bool empty = STRUCT_NAME ## __empty(& STRUCT_NAME ## __singleton ); \
+        bool empty = STRUCT_NAME ## __empty(); \
         if (!empty) { \
-            ret = STRUCT_NAME ## __pop(& STRUCT_NAME ## __singleton ); \
+            ret = STRUCT_NAME ## __pop(); \
 	        completed = 1; \
 	    } \
 	    sei(); \
@@ -367,7 +367,7 @@ usart ## USART_ID ## __get_line(char* str, uint8_t len) { \
     return i; \
 }
 
-// Instanciation of the transmission ring buffer
+// Instanciation of the reception ring buffer
 #ifndef USART0_RX_BUFFER_SIZE
   #define USART0_RX_BUFFER_SIZE DEFAULT_USART_RING_BUFFER_SIZE
 #endif

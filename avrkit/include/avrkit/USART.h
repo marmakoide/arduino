@@ -2,8 +2,6 @@
 #define AVRKIT_USART_H
 
 #include <avr/io.h>
-#include <avr/sleep.h>
-#include <avr/interrupt.h>
 
 #include <avrkit/types.h>
 
@@ -287,21 +285,9 @@ usart ## USART_ID ## __on_data_register_empty() { \
     UDR ## USART_ID = STRUCT_NAME ## __pop(); \
 } \
 \
-static void \
+inline static void \
 usart ## USART_ID ## __send_char(char c) { \
-    bool completed = 0; \
-    do { \
-        cli(); \
-        bool full = STRUCT_NAME ## __full(); \
-        if (!full) { \
-            STRUCT_NAME ## __push(c); \
-            completed = 1; \
-        } \
-        sei(); \
-        \
-        if (full) \
-            sleep_mode(); \
-    } while(!completed); \
+    STRUCT_NAME ## __atomic_push_or_sleep(c); \
 } \
 \
 static void \
@@ -334,24 +320,9 @@ usart ## USART_ID ##  __on_rx_complete() { \
         STRUCT_NAME ## __push(UDR ## USART_ID ); \
 } \
 \
-static char \
+inline static char \
 usart ## USART_ID ## __get_char() { \
-    char ret; \
-    bool completed = 0; \
-    do { \
-        cli(); \
-        bool empty = STRUCT_NAME ## __empty(); \
-        if (!empty) { \
-            ret = STRUCT_NAME ## __pop(); \
-	        completed = 1; \
-	    } \
-	    sei(); \
-\
-	    if (empty) \
-    	    sleep_mode(); \
-    } while(!completed); \
-\
-	return ret; \
+	return STRUCT_NAME ## __atomic_pop_or_sleep(); \
 } \
 \
 static uint8_t \

@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 
+#include <avr/sleep.h>
+#include <avr/interrupt.h>
+
 
 /*
  * Boolean type
@@ -52,11 +55,48 @@ STRUCT_NAME ## __push(DATA_TYPE value) { \
 	return 0; \
 } \
 \
+inline static void \
+STRUCT_NAME ## __atomic_push_or_sleep(DATA_TYPE value) { \
+    bool completed = 0; \
+    do { \
+        cli(); \
+        bool full = STRUCT_NAME ## __full(); \
+        if (!full) { \
+            STRUCT_NAME ## __push(value); \
+            completed = 1; \
+        } \
+        sei(); \
+        \
+        if (full) \
+            sleep_mode(); \
+    } while(!completed); \
+} \
+\
 inline static DATA_TYPE \
 STRUCT_NAME ## __pop() { \
     DATA_TYPE out = STRUCT_NAME ## __singleton.data[STRUCT_NAME ## __singleton.start]; \
     STRUCT_NAME ## __singleton.start = (STRUCT_NAME ## __singleton.start + 1) % BUFFER_SIZE; \
 	return out; \
+} \
+\
+inline static DATA_TYPE \
+STRUCT_NAME ## __atomic_pop_or_sleep() { \
+    DATA_TYPE ret; \
+    bool completed = 0; \
+    do { \
+        cli(); \
+        bool empty = STRUCT_NAME ## __empty(); \
+        if (!empty) { \
+            ret = STRUCT_NAME ## __pop(); \
+	        completed = 1; \
+	    } \
+	    sei(); \
+\
+	    if (empty) \
+    	    sleep_mode(); \
+    } while(!completed); \
+\
+	return ret; \
 }
 
  

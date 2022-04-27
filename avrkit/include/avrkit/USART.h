@@ -5,8 +5,7 @@
 
 #include <avrkit/types.h>
 
-    
-    
+   
 /*
  * USART state observation routines
  */

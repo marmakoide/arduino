@@ -55,7 +55,7 @@ STRUCT_NAME ## __push(DATA_TYPE value) { \
 	return 0; \
 } \
 \
-inline static void \
+static void \
 STRUCT_NAME ## __atomic_push_or_sleep(DATA_TYPE value) { \
     bool completed = 0; \
     do { \
@@ -79,7 +79,7 @@ STRUCT_NAME ## __pop() { \
 	return out; \
 } \
 \
-inline static DATA_TYPE \
+static DATA_TYPE \
 STRUCT_NAME ## __atomic_pop_or_sleep() { \
     DATA_TYPE ret; \
     bool completed = 0; \

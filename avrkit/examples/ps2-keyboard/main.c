@@ -68,7 +68,7 @@ main(void) {
 		msg_count += 1;
 	}
 	*/
-	
+
 	while(1) {
 		uint16_t scancode = ps2_keyboard__get_scancode();
 		
@@ -173,6 +173,14 @@ main(void) {
 
 			case SCANCODE_RIGHT_BRACKET:
 				fputs("]", &usart_output);
+				break;
+
+			case SCANCODE_INSERT:
+				fputs("INSERT", &usart_output);
+				break;
+								
+			case SCANCODE_DELETE:
+				fputs("DELETE", &usart_output);
 				break;
 
 			case SCANCODE_LEFT_ALT:

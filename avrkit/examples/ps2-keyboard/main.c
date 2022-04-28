@@ -107,6 +107,10 @@ main(void) {
 				fprintf(&usart_output, "F%d", 1 + scancode - SCANCODE_F1);
 				break;
 
+			case SCANCODE_PAUSE:
+				fputs("PAUSE", &usart_output);
+				break;
+				
 			case SCANCODE_SPACE:
 				fputs("SPACE", &usart_output);
 				break;

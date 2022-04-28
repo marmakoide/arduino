@@ -6,6 +6,9 @@
 
 #include <avrkit/GPIO.h>
 
+// If you set PS2_KEYBOARD_RX_BUFFER_SIZE, take at least 8 and preferably a power of 2
+// Power of 2 is preferaqble for performance
+// 8 is the length of longest scancode sequence that one key press can trigger
 #define DEFAULT_PS2_KEYBOARD_RING_BUFFER_SIZE 16
 
 
@@ -162,6 +165,8 @@ enum ps2_keyboard__scancode {
 	SCANCODE_RIGHT,
 	SCANCODE_UP,
 	SCANCODE_DOWN,
+
+	SCANCODE_PAUSE,
 	
 	SCANCODE_LEFT_GUI,
 	SCANCODE_RIGHT_GUI,
@@ -522,45 +527,114 @@ ps2_keyboard__set2_extended_scancode_array[0x7e] = {
 }; // uint8_t ps2_keyboard__set2_extended_scancode_array[]
 
 
+const __flash uint8_t 
+ps2_keyboard__set2_pause_scancode_sequence[8] = {
+	0xe1, 0x14, 0x77, 0xe1, 0xf0, 0x14, 0xf0, 0x77
+}; // ps2_keyboard__set2_pause_scancode_sequence
+
 #define SCANCODE_MASK_KEY_RELEASE 0x8000
 
 
+static uint8_t
+ps2_keyboard__decode_set2_scancode(uint8_t code) {
+	if (code >= sizeof(ps2_keyboard__set2_scancode_array))
+		return 0x00;
+		
+	return ps2_keyboard__set2_scancode_array[code];
+}
+
+
+static uint8_t
+ps2_keyboard__decode_set2_extended_scancode(uint8_t code) {
+	if (code >= sizeof(ps2_keyboard__set2_extended_scancode_array))
+		return 0x00;
+		
+	return ps2_keyboard__set2_extended_scancode_array[code];
+}
+
+
+static bool
+ps2_keyboard__decode_set2_scancode_sequence(const __flash uint8_t* scancode_array, uint8_t len) {
+	for( ; len != 0; --len, ++scancode_array)
+		if (*scancode_array != ps2_keyboard__get_byte())
+			return 0x00;
+			
+	return 0x01;
+}
+
+    							
 enum ps2_keyboard_scancode_decoder_state {
-    INIT_state,
-    END_state
+    state_INIT,
+    state_END,
+    state_RELEASE_CODE,
+    state_EXTENTED_CODE,
+    state_EXTENTED_RELEASE_CODE
 }; // enum ps2_keyboard_scancode_decoder_state
 
 
-uint16_t
+static uint16_t
 ps2_keyboard__get_set2_scancode() {
+	// This routine is for US QWERTY keyboards only
+	// The code is written so that modifying the scancode tables should not take much effort
 	uint16_t ret = 0x0000;
 	
     const __flash uint8_t* scancode_array = ps2_keyboard__set2_scancode_array;
     uint8_t scancode_array_size = sizeof(ps2_keyboard__set2_scancode_array);
     
-    uint8_t state = INIT_state;
-    
-    for(uint8_t state = INIT_state; state != END_state; ) {
-        uint8_t scancode = 0;
+    uint8_t state = state_INIT;
+    for(uint8_t state = state_INIT; state != state_END; ) {
     	uint8_t code = ps2_keyboard__get_byte();
-	    switch(code) {
-	        case 0xe0: // extended scancode
-	            scancode_array = ps2_keyboard__set2_extended_scancode_array;
-	            scancode_array_size = sizeof(ps2_keyboard__set2_extended_scancode_array);
-	            break;
-	            
-	        case 0xf0: // key release
+
+    	switch(state) {
+    		case state_INIT:
+    			switch(code) {
+    				case 0xe0:
+    					state = state_EXTENTED_CODE;
+    					break;
+						
+    				case 0xf0:
+    					state = state_RELEASE_CODE;
+    					break;
+    					
+    				default:
+    					if (code == ps2_keyboard__set2_pause_scancode_sequence[0]) {
+    						if (ps2_keyboard__decode_set2_scancode_sequence(ps2_keyboard__set2_pause_scancode_sequence + 1, sizeof(ps2_keyboard__set2_pause_scancode_sequence) - 1))
+    							ret = SCANCODE_PAUSE;
+    					}
+    					else
+	            			ret = ps2_keyboard__decode_set2_scancode(code);
+	            			
+	            		state = state_END;
+    					break;
+    			}
+    		break; // case state_INIT
+    		
+    		case state_RELEASE_CODE:
+	            ret = ps2_keyboard__decode_set2_scancode(code);
 	            ret |= SCANCODE_MASK_KEY_RELEASE;
-	            break;
-	        
-	        default: // scancode index
-	            if (code < scancode_array_size)
-    	            scancode = scancode_array[code];
-    	        ret |= scancode;
-	            state = END_state;
-	            break;
-	    }
-	}
+	            state = state_END;
+    		break; // case state_RELEASE_CODE
+
+			case state_EXTENTED_CODE:
+				switch(code) {
+    				case 0xf0:
+    					state = state_EXTENTED_RELEASE_CODE;
+    					break;
+
+    				default:
+	            		ret = ps2_keyboard__decode_set2_extended_scancode(code);
+	            		state = state_END;
+    					break;    				
+				}
+			break; // case state_EXTENDED_CODE
+			
+    		case state_EXTENTED_RELEASE_CODE:
+	            ret = ps2_keyboard__decode_set2_extended_scancode(code);
+	            ret |= SCANCODE_MASK_KEY_RELEASE;	            
+	            state = state_END;
+    		break; // case state_EXTENDED_RELEASE_CODE	
+    	}
+    }
 	
 	return ret;
 }

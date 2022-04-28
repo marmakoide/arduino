@@ -510,7 +510,7 @@ ps2_keyboard__extended_scancode_array[0x7e] = {
     SCANCODE_DOWN,               // 0x72
     0,                           // 0x73
     SCANCODE_RIGHT,              // 0x74
-    SCANCODE_DOWN,               // 0x75
+    SCANCODE_UP,                 // 0x75
     0,                           // 0x76
     0,                           // 0x77
     0,                           // 0x78
@@ -555,7 +555,7 @@ ps2_keyboard__get_scancode() {
 	        
 	        default: // scancode index
 	            if (code < scancode_array_size)
-    	            scancode = scancode_array[code];	        
+    	            scancode = scancode_array[code];
     	        ret |= scancode;
 	            state = END_state;
 	            break;

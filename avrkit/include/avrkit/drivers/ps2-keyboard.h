@@ -248,7 +248,7 @@ enum ps2_keyboard__scancode {
 
 
 const __flash uint8_t 
-ps2_keyboard__standard_scancode_array[0x84] = {
+ps2_keyboard__set2_scancode_array[0x84] = {
 	0,                      // 0x00
 	SCANCODE_F9,            // 0x01
 	0,                      // 0x02
@@ -381,11 +381,11 @@ ps2_keyboard__standard_scancode_array[0x84] = {
 	0,                      // 0x81
 	0,                      // 0x82
 	SCANCODE_F7             // 0x83
-}; // uint8_t standard_scancode_array[]
+}; // uint8_t ps2_keyboard__set2_scancode_array[]
 
 
 const __flash uint8_t 
-ps2_keyboard__extended_scancode_array[0x7e] = {
+ps2_keyboard__set2_extended_scancode_array[0x7e] = {
     0,                           // 0x00
     0,                           // 0x01
     0,                           // 0x02
@@ -519,7 +519,7 @@ ps2_keyboard__extended_scancode_array[0x7e] = {
     0,                           // 0x7b
     0,                           // 0x7c
     SCANCODE_PAGE_UP,            // 0x7d
-}; // uint8_t extended_scancode_array[]
+}; // uint8_t ps2_keyboard__set2_extended_scancode_array[]
 
 
 #define SCANCODE_MASK_KEY_RELEASE 0x8000
@@ -532,11 +532,11 @@ enum ps2_keyboard_scancode_decoder_state {
 
 
 uint16_t
-ps2_keyboard__get_scancode() {
+ps2_keyboard__get_set2_scancode() {
 	uint16_t ret = 0x0000;
 	
-    const __flash uint8_t* scancode_array = ps2_keyboard__standard_scancode_array;
-    uint8_t scancode_array_size = sizeof(ps2_keyboard__standard_scancode_array);
+    const __flash uint8_t* scancode_array = ps2_keyboard__set2_scancode_array;
+    uint8_t scancode_array_size = sizeof(ps2_keyboard__set2_scancode_array);
     
     uint8_t state = INIT_state;
     
@@ -545,8 +545,8 @@ ps2_keyboard__get_scancode() {
     	uint8_t code = ps2_keyboard__get_byte();
 	    switch(code) {
 	        case 0xe0: // extended scancode
-	            scancode_array = ps2_keyboard__extended_scancode_array;
-	            scancode_array_size = sizeof(ps2_keyboard__extended_scancode_array);
+	            scancode_array = ps2_keyboard__set2_extended_scancode_array;
+	            scancode_array_size = sizeof(ps2_keyboard__set2_extended_scancode_array);
 	            break;
 	            
 	        case 0xf0: // key release

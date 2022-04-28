@@ -70,7 +70,7 @@ main(void) {
 	*/
 
 	while(1) {
-		uint16_t scancode = ps2_keyboard__get_scancode();
+		uint16_t scancode = ps2_keyboard__get_set2_scancode();
 		
 		if (scancode & SCANCODE_MASK_KEY_RELEASE) {
 		    scancode &= ~SCANCODE_MASK_KEY_RELEASE;

@@ -306,12 +306,16 @@ main(void) {
 				fprintf(&usart_output, "keypad %u", scancode - SCANCODE_KP_0);
 				break;
 
+			case SCANCODE_KP_ENTER:
+				fputs("keypad ENTER", &usart_output);
+				break;
+
 			case SCANCODE_KP_PLUS:
 				fputs("keypad +", &usart_output);
 				break;
 
 			case SCANCODE_KP_MINUS:
-				fputs("keypad +", &usart_output);
+				fputs("keypad -", &usart_output);
 				break;
 
 			case SCANCODE_KP_PERIOD:

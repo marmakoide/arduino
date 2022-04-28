@@ -207,6 +207,10 @@ main(void) {
 				fputs("RIGHT SHIFT", &usart_output);
 				break;
 
+			case SCANCODE_APPLICATION:
+				fputs("APPLICATION", &usart_output);
+				break;
+
 			case SCANCODE_LEFT_GUI:
 				fputs("LEFT GUI", &usart_output);
 				break;

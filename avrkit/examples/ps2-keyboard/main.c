@@ -111,6 +111,10 @@ main(void) {
 				fputs("PAUSE", &usart_output);
 				break;
 				
+			case SCANCODE_PRINTSCREEN:
+				fputs("PRINTSCREEN", &usart_output);
+				break;
+				
 			case SCANCODE_SPACE:
 				fputs("SPACE", &usart_output);
 				break;

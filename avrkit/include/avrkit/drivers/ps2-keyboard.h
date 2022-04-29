@@ -167,6 +167,7 @@ enum ps2_keyboard__scancode {
 	SCANCODE_DOWN,
 
 	SCANCODE_PAUSE,
+	SCANCODE_PRINTSCREEN,
 	
 	SCANCODE_LEFT_GUI,
 	SCANCODE_RIGHT_GUI,
@@ -410,7 +411,7 @@ ps2_keyboard__set2_extended_scancode_array[0x7e] = {
 
     SCANCODE_MEDIA_WWW_SEARCH,   // 0x10
     SCANCODE_RIGHT_ALT,          // 0x11
-    0,                           // 0x12
+    SCANCODE_RIGHT_SHIFT,        // 0x12 (aka "fake shift" introduced by some keyboards)
     0,                           // 0x13
     SCANCODE_RIGHT_CRTL,         // 0x14
     SCANCODE_MEDIA_PREV_TRACK,   // 0x15
@@ -522,7 +523,7 @@ ps2_keyboard__set2_extended_scancode_array[0x7e] = {
     0,                           // 0x79
     SCANCODE_PAGE_DOWN,          // 0x7a
     0,                           // 0x7b
-    0,                           // 0x7c
+    SCANCODE_PRINTSCREEN,        // 0x7c
     SCANCODE_PAGE_UP,            // 0x7d
 }; // uint8_t ps2_keyboard__set2_extended_scancode_array[]
 
@@ -622,7 +623,7 @@ ps2_keyboard__get_set2_scancode() {
     					break;
 
     				default:
-	            		ret = ps2_keyboard__decode_set2_extended_scancode(code);
+	            		ret = ps2_keyboard__decode_set2_extended_scancode(code);	            		
 	            		state = state_END;
     					break;    				
 				}
@@ -630,7 +631,7 @@ ps2_keyboard__get_set2_scancode() {
 			
     		case state_EXTENTED_RELEASE_CODE:
 	            ret = ps2_keyboard__decode_set2_extended_scancode(code);
-	            ret |= SCANCODE_MASK_KEY_RELEASE;	            
+	            ret |= SCANCODE_MASK_KEY_RELEASE;
 	            state = state_END;
     		break; // case state_EXTENDED_RELEASE_CODE	
     	}

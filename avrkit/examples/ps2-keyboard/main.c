@@ -68,7 +68,7 @@ main(void) {
 		msg_count += 1;
 	}
 	*/
-
+	
 	while(1) {
 		uint16_t scancode = ps2_keyboard__get_set2_scancode();
 		

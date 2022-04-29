@@ -411,7 +411,7 @@ ps2_keyboard__set2_extended_scancode_array[0x7e] = {
 
     SCANCODE_MEDIA_WWW_SEARCH,   // 0x10
     SCANCODE_RIGHT_ALT,          // 0x11
-    SCANCODE_RIGHT_SHIFT,        // 0x12 (aka "fake shift" introduced by some keyboards)
+    SCANCODE_LEFT_SHIFT,         // 0x12 (aka "fake shift" introduced by some keyboards)
     0,                           // 0x13
     SCANCODE_RIGHT_CRTL,         // 0x14
     SCANCODE_MEDIA_PREV_TRACK,   // 0x15
@@ -486,7 +486,7 @@ ps2_keyboard__set2_extended_scancode_array[0x7e] = {
     0,                           // 0x56
     0,                           // 0x57
     0,                           // 0x58
-    0,                           // 0x59
+    SCANCODE_RIGHT_SHIFT,        // 0x59 (aka shift introduced when hitting other extended keys simulatneously)
     SCANCODE_KP_ENTER,           // 0x5a
     0,                           // 0x5b
     0,                           // 0x5c

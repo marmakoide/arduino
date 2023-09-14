@@ -1,7 +1,7 @@
 MCU=atmega328p
 USB_PORT=/dev/ttyUSB0
 
-INCLUDES=../../include
+INCLUDES=../../../include
 
 .PHONY: clean upload
 

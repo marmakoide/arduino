@@ -8,7 +8,7 @@ INCLUDES=../../include
 all: main.hex
 
 %.o: %.c
-	avr-gcc -I$(INCLUDES) -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c -o $@ $<
+	avr-gcc -I$(INCLUDES) -Os -DF_CPU=16000000UL -D__AVRKIT_$(MCU)__ -mmcu=$(MCU) -c -o $@ $<
 
 %.elf: %.o
 	avr-gcc -mmcu=$(MCU) $< -o $@

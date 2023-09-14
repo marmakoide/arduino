@@ -13,27 +13,27 @@
 
 
 ISR(USART_UDRE_vect) {
-    usart0__on_data_register_empty();
+	usart0__on_data_register_empty();
 }
 	
 ISR(USART_RX_vect) {
-    usart0__on_rx_complete();
+	usart0__on_rx_complete();
 }
 
-	
+
 void
-usart0__init() {    
-    usart0__set_bauds(9600UL);
-    usart0__set_mode_asynchronous();
-    usart0__set_char_size_8();
-    usart0__set_stop_bits_1();
-    usart0__set_parity_none();
+usart0__init() {
+	usart0__set_bauds(9600UL);
+	usart0__set_mode_asynchronous();
+	usart0__set_char_size_8();
+	usart0__set_stop_bits_1();
+	usart0__set_parity_none();
     
-    usart0__enable_rx();
-    usart0__enable_rx_complete_interrupt();
+	usart0__enable_rx();
+	usart0__enable_rx_complete_interrupt();
     
-    usart0__enable_tx();
-    usart0__enable_data_register_empty_interrupt();
+	usart0__enable_tx();
+	usart0__enable_data_register_empty_interrupt();
 }
 
 
@@ -43,9 +43,9 @@ usart0__init() {
 	
 int
 main(void) {
-    char input_buffer[INPUT_BUFFER_SIZE];
+	char input_buffer[INPUT_BUFFER_SIZE];
     
-    usart0__init();
+	usart0__init();
 	sei();
 	
 	
@@ -55,7 +55,7 @@ main(void) {
 		// Fill the input buffer
 		usart0__get_line(input_buffer, INPUT_BUFFER_SIZE);
 		
-		// Write the content of the input buffer        
+		// Write the content of the input buffer
 		usart0__send_str("=> '");
 		usart0__send_str(input_buffer);
 		usart0__send_str("'\r\n");

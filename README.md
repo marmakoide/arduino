@@ -51,6 +51,7 @@ I gathered the information I needed to realize the tutorials from those sources
 * [Bare Metal Micro](https://baremetalmicro.com/) Nicely explained examples on the fundamentals ie. ports, interrupts
 * [The USART of the AVR](https://maxembedded.com/2013/09/the-usart-of-the-avr/) Detailed explanation about the USART/UART, good complement to the reference manual
 * [I2C on the AVR](http://www.avrbeginners.net/architecture/twi/twi.html)
+* [Various topics on AVR and I2C modules](https://wolles-elektronikkiste.de/en)
 
 I am very thankful to all those people who took the time and the effort to
 write those tutorials and manuals.

@@ -20,7 +20,6 @@ main(void) {
 	// Set pin B1 as output
 	DDRB |= _BV(DDB1);
 	
-	// Main loop
-	while(1)
-		sleep_mode();
+	// Enter sleep mode, which we will never leave
+	sleep_mode();
 }

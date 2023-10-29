@@ -26,3 +26,6 @@ Timer 1 setup goes as follow
 1. Increment the timer every 1024 ticks, *TCCR1B |= (1 << CS12)*
 1. Set *OCR1A = 15624*
 1. Enable write operation on pin B1, as *OC1A* is associated to that pin
+
+The pin *OC1A* will be toggled on and off with zero work from the MCU. Once we
+enter sleep mode, nothing will put the MCU out of it sleep.

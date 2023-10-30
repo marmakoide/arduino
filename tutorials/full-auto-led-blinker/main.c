@@ -6,13 +6,13 @@
 int
 main(void) {
 	// Toggle OC1A (aka pin B1) when timer 1 equals to OCR1A
-	TCCR1A |= (1 << COM1A0);
+	TCCR1A |= _BV(COM1A0);
 
 	// Clear timer on compare match
-	TCCR1B |= (1 << WGM12);
+	TCCR1B |= _BV(WGM12);
 
 	// Set prescaler to 1024
-	TCCR1B |= (1 << CS12) | (1 << CS10);
+	TCCR1B |= _BV(CS12) | _BV(CS10);
 
 	// Reset timer after 15625 ticks ie. 1 sec on a 16 / 1024 Mhz clock
 	OCR1A = 15624;

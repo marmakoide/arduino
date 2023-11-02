@@ -19,6 +19,7 @@ attempt to leave the least amount of mystery.
 1. [pin-trigger](tutorials/pin-trigger) : switch on and off the Arduino UNO's on-board led with pin 12
 1. [full-auto-led-blinker](tutorials/full-auto-led-blinker) : blinks an external led driven by pin 9, without ever leaving sleep mode 
 1. [interrupt-driven-led-blinker](tutorials/interrupt-driven-led-blinker) : blinks the Arduino UNO's on-board led with interruptions
+1. [servo-motor](tutorials/servo-motor) : controls a servor motor
 1. [serial-sync-echo](tutorials/serial-sync-echo) : echo on the serial output what is given in the serial input, synchronous style
 1. [ADC](tutorials/analog-read) : sample an analog input to switch on and off switch on and off the Arduino UNO's on-board led.
 1. [i2c](tutorials/i2c): interfacing with i2c devices 

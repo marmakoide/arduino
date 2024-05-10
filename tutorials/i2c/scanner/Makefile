@@ -19,4 +19,4 @@ clean:
 	rm -f *.o *.elf *.hex
 
 upload: main.hex
-	avrdude -F -V -c arduino -p ATMEGA328P -P ${SERIAL_PORT} -b 115200 -U flash:w:$<
+	avrdude -F -V -c arduino -p ATMEGA328P -P ${SERIAL_PORT} -b 57600 -U flash:w:$<

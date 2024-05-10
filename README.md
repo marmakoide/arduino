@@ -52,6 +52,7 @@ I gathered the information I needed to realize the tutorials from those sources
 * [The USART of the AVR](https://maxembedded.com/2013/09/the-usart-of-the-avr/) Detailed explanation about the USART/UART, good complement to the reference manual
 * [I2C on the AVR](http://www.avrbeginners.net/architecture/twi/twi.html)
 * [Various topics on AVR and I2C modules](https://wolles-elektronikkiste.de/en)
+* [SPI programming](https://mansfield-devine.com/speculatrix/2018/01/avr-basics-spi-on-the-atmega-part-1/)
 
 I am very thankful to all those people who took the time and the effort to
 write those tutorials and manuals.

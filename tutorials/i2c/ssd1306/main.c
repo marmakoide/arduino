@@ -11,8 +11,8 @@
 
 
 
-extern const __flash uint8_t bitmap_data[512];
-
+//extern const __flash uint8_t bitmap_data[512];
+#include "bitmap.c"
 
 // --- UART handling ----------------------------------------------------------
 

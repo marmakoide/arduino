@@ -1,5 +1,0 @@
-#ifndef AVRKIT_MAIN_HEADER_H
-#define AVRKIT_MAIN_HEADER_H
-
-
-#endif /* AVRKIT_MAIN_HEADER_H */

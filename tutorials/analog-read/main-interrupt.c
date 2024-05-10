@@ -18,20 +18,20 @@ void
 setup_adc(uint8_t channel)  {
 	// Set ADC clock to 16Mhz/128 = 125 kHz
 	// One sampling will take 13 ADC cycles, thus 104 usec
-	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+	ADCSRA |= _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0);
 
 	// Voltage reference from Avcc (5v)
-	ADMUX |= 1 << REFS0;
+	ADMUX |= _BV(REFS0);
 
 	// Set the channel to read
 	ADMUX &= 0xe0;
 	ADMUX |= channel;
 
 	// Switch ADC on
-	ADCSRA |= 1 << ADEN;
+	ADCSRA |= _BV(ADEN);
 
 	// Enable ADC ready interrupt
-	ADCSRA |= 1 << ADIE;
+	ADCSRA |= _BV(ADIE);
 }
 
 

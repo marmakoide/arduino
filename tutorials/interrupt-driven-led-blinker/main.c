@@ -3,11 +3,14 @@
 #include <avr/interrupt.h>
 
 
+ISR(TIMER1_COMPA_vect) {
+	// Togge pin B5
+	PORTB ^= _BV(PORTB5);
+}
+
+
 int
 main(void) {
-	// Toggle OC1A (aka pin B1) when timer 1 equals to OCR1A
-	TCCR1A |= _BV(COM1A0);
-
 	// Clear timer on compare match
 	TCCR1B |= _BV(WGM12);
 
@@ -16,10 +19,17 @@ main(void) {
 
 	// Reset timer after 15625 ticks ie. 1 sec on a 16 / 1024 Mhz clock
 	OCR1A = 15624;
+
+	// Trigger TIMER1_COMPA interruption
+	TIMSK1 |= _BV(OCIE1A);
 	
-	// Set pin B1 as output
-	DDRB |= _BV(DDB1);
+	// Set pin B5 as output
+	DDRB |= _BV(DDB5);
+
+	// Enable interurptions
+	sei();
 	
-	// Enter sleep mode, which we will never leave
-	sleep_mode();
+	// Main loop
+	while(1)
+		sleep_mode();
 }
